@@ -11,11 +11,6 @@ const taskRoutes = require('./routes/task.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
 const errorHandler = require('./middleware/errorHandler');
 
-if (!process.env.JWT_SECRET) {
-  console.error('FATAL: JWT_SECRET is not set');
-  process.exit(1);
-}
-
 const app = express();
 
 app.use(helmet());

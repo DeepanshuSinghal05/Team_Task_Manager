@@ -1,11 +1,16 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
 
-const signToken = (user) =>
-  jwt.sign({ id: user.id, email: user.email, name: user.name, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '1d',
-  });
+const signToken = (user) => {
+  const payload = {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+    iat: Date.now(),
+  };
+  return Buffer.from(JSON.stringify(payload)).toString('base64url');
+};
 
 const register = async (req, res, next) => {
   try {
